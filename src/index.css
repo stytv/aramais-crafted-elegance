@@ -8,81 +8,109 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Luxury Leather Brand Colors */
+    --background: 42 25% 95%; /* Warm ivory */
+    --foreground: 15 35% 15%; /* Dark brown text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 42 30% 97%; /* Ivory cards */
+    --card-foreground: 15 35% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 42 30% 97%;
+    --popover-foreground: 15 35% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary: Cognac Brown */
+    --primary: 20 35% 35%; /* Cognac brown */
+    --primary-foreground: 42 30% 97%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary: Beige */
+    --secondary: 42 25% 90%; /* Warm beige */
+    --secondary-foreground: 15 35% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 42 20% 88%;
+    --muted-foreground: 15 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent: Gold */
+    --accent: 40 35% 58%; /* Warm gold */
+    --accent-foreground: 15 35% 15%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 42 30% 97%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 42 20% 85%;
+    --input: 42 20% 85%;
+    --ring: 20 35% 35%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Custom Brand Colors */
+    --dark-brown: 15 40% 18%; /* Deep chocolate brown */
+    --cognac: 20 35% 35%; /* Rich cognac */
+    --beige: 42 25% 90%; /* Soft beige */
+    --ivory: 42 30% 97%; /* Warm ivory */
+    --gold: 40 35% 58%; /* Elegant gold */
+    --gold-muted: 40 25% 75%; /* Subtle gold */
+
+    /* Gradients */
+    --gradient-luxury: linear-gradient(135deg, hsl(var(--cognac)), hsl(var(--dark-brown)));
+    --gradient-warm: linear-gradient(180deg, hsl(var(--ivory)), hsl(var(--beige)));
+    --gradient-gold: linear-gradient(135deg, hsl(var(--gold)), hsl(var(--gold-muted)));
+
+    /* Shadows */
+    --shadow-luxury: 0 8px 32px hsl(var(--dark-brown) / 0.12);
+    --shadow-gold: 0 4px 20px hsl(var(--gold) / 0.25);
+    --shadow-soft: 0 2px 12px hsl(var(--dark-brown) / 0.08);
+
+    /* Transitions */
+    --transition-luxury: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s ease-out;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 15 40% 8%; /* Very dark brown */
+    --foreground: 42 30% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 15 35% 12%;
+    --card-foreground: 42 30% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 15 35% 12%;
+    --popover-foreground: 42 30% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 40 35% 58%; /* Gold in dark mode */
+    --primary-foreground: 15 40% 8%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 15 25% 20%;
+    --secondary-foreground: 42 30% 95%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 15 20% 18%;
+    --muted-foreground: 42 15% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 20 35% 35%; /* Cognac in dark */
+    --accent-foreground: 42 30% 95%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 42 30% 95%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 15 20% 25%;
+    --input: 15 20% 25%;
+    --ring: 40 35% 58%;
+
+    /* Dark Mode Brand Colors */
+    --dark-brown: 15 50% 5%;
+    --cognac: 20 40% 25%;
+    --beige: 15 15% 25%;
+    --ivory: 15 20% 18%;
+    --gold: 40 40% 65%;
+    --gold-muted: 40 25% 45%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
