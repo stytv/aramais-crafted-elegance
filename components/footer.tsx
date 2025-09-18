@@ -1,119 +1,134 @@
 import Link from "next/link"
-import { Facebook, Instagram, Twitter } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react"
 
 export function Footer() {
   return (
-    <footer className="bg-card text-card-foreground">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-card/50 border-t border-accent/20 mt-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand Section */}
-          <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="text-2xl heading-serif text-accent">Aramis</div>
-              <div className="text-sm text-muted-foreground">LEATHER</div>
-            </div>
-            <p className="text-muted-foreground mb-6 max-w-md">
-              "Shoes for the Modern Aristocrat" - Handcrafted leather footwear that embodies timeless elegance and
-              exceptional quality.
+          {/* Brand */}
+          <div className="space-y-4">
+            <h3 className="heading-serif text-2xl font-bold text-card-foreground">
+              Aramis Leather
+            </h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Crafting premium leather goods with traditional techniques and modern elegance. 
+              Every piece tells a story of quality and craftsmanship.
             </p>
             <div className="flex space-x-4">
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-accent">
+              <Link href="#" className="text-muted-foreground hover:text-accent transition-colors">
                 <Facebook className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-accent">
+              </Link>
+              <Link href="#" className="text-muted-foreground hover:text-accent transition-colors">
                 <Instagram className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-accent">
+              </Link>
+              <Link href="#" className="text-muted-foreground hover:text-accent transition-colors">
                 <Twitter className="h-5 w-5" />
-              </Button>
+              </Link>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="heading-serif text-lg font-semibold mb-4 text-accent">Collections</h3>
-            <ul className="space-y-2">
+            <h4 className="font-semibold text-card-foreground mb-4">Quick Links</h4>
+            <ul className="space-y-3">
               <li>
-                <Link href="/category/oxfords" className="text-muted-foreground hover:text-accent transition-colors">
-                  Oxford Shoes
+                <Link href="/" className="text-muted-foreground hover:text-accent transition-colors">
+                  Home
                 </Link>
               </li>
               <li>
-                <Link href="/category/brogues" className="text-muted-foreground hover:text-accent transition-colors">
-                  Brogue Shoes
+                <Link href="/shop" className="text-muted-foreground hover:text-accent transition-colors">
+                  Shop
                 </Link>
               </li>
               <li>
-                <Link href="/category/loafers" className="text-muted-foreground hover:text-accent transition-colors">
-                  Loafers
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/boots" className="text-muted-foreground hover:text-accent transition-colors">
-                  Boots
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Customer Service */}
-          <div>
-            <h3 className="heading-serif text-lg font-semibold mb-4 text-accent">Customer Service</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/size-guide" className="text-muted-foreground hover:text-accent transition-colors">
-                  Size Guide
-                </Link>
-              </li>
-              <li>
-                <Link href="/shipping" className="text-muted-foreground hover:text-accent transition-colors">
-                  Shipping Info
-                </Link>
-              </li>
-              <li>
-                <Link href="/returns" className="text-muted-foreground hover:text-accent transition-colors">
-                  Returns
+                <Link href="/about" className="text-muted-foreground hover:text-accent transition-colors">
+                  About Us
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="text-muted-foreground hover:text-accent transition-colors">
-                  Contact Us
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Categories */}
+          <div>
+            <h4 className="font-semibold text-card-foreground mb-4">Categories</h4>
+            <ul className="space-y-3">
+              <li>
+                <Link href="/category/shoes" className="text-muted-foreground hover:text-accent transition-colors">
+                  Shoes
+                </Link>
+              </li>
+              <li>
+                <Link href="/category/bags" className="text-muted-foreground hover:text-accent transition-colors">
+                  Bags
+                </Link>
+              </li>
+              <li>
+                <Link href="/category/belts" className="text-muted-foreground hover:text-accent transition-colors">
+                  Belts
+                </Link>
+              </li>
+              <li>
+                <Link href="/category/wallets" className="text-muted-foreground hover:text-accent transition-colors">
+                  Wallets
+                </Link>
+              </li>
+              <li>
+                <Link href="/custom" className="text-muted-foreground hover:text-accent transition-colors">
+                  Custom Orders
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="font-semibold text-card-foreground mb-4">Contact Info</h4>
+            <ul className="space-y-3">
+              <li className="flex items-center space-x-3">
+                <MapPin className="h-4 w-4 text-accent flex-shrink-0" />
+                <span className="text-muted-foreground text-sm">
+                  123 Leather Street, Craft District, City 12345
+                </span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <Phone className="h-4 w-4 text-accent flex-shrink-0" />
+                <Link href="tel:+1234567890" className="text-muted-foreground hover:text-accent transition-colors text-sm">
+                  +1 (234) 567-8900
+                </Link>
+              </li>
+              <li className="flex items-center space-x-3">
+                <Mail className="h-4 w-4 text-accent flex-shrink-0" />
+                <Link href="mailto:info@aramisleather.com" className="text-muted-foreground hover:text-accent transition-colors text-sm">
+                  info@aramisleather.com
                 </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Newsletter Section */}
-        <div className="border-t border-border mt-8 pt-8">
+        <div className="border-t border-accent/20 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <h3 className="heading-serif text-lg font-semibold text-accent mb-2">Join the Club</h3>
-              <p className="text-muted-foreground">Receive exclusive offers and updates from Aramis Leather.</p>
+            <p className="text-muted-foreground text-sm">
+              © 2024 Aramis Leather. All rights reserved.
+            </p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <Link href="/privacy" className="text-muted-foreground hover:text-accent transition-colors text-sm">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="text-muted-foreground hover:text-accent transition-colors text-sm">
+                Terms of Service
+              </Link>
+              <Link href="/size-guide" className="text-muted-foreground hover:text-accent transition-colors text-sm">
+                Size Guide
+              </Link>
             </div>
-            <div className="flex w-full md:w-auto max-w-sm">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                className="rounded-r-none bg-background border-accent/20 focus:border-accent"
-              />
-              <Button className="rounded-l-none bg-accent text-accent-foreground hover:bg-accent/90">Subscribe</Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; 2024 Aramis Leather. All rights reserved.</p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link href="/privacy-policy" className="hover:text-accent transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-accent transition-colors">
-              Terms of Service
-            </Link>
           </div>
         </div>
       </div>

@@ -30,26 +30,22 @@ export function ProductDetail({ product }: ProductDetailProps) {
   const [selectedSize, setSelectedSize] = useState<number | null>(null)
   const [quantity, setQuantity] = useState(1)
   const [isWishlisted, setIsWishlisted] = useState(false)
-  const { dispatch } = useCart()
+  const { addItem } = useCart()
 
   const handleAddToCart = () => {
     if (!selectedSize) return
 
-    dispatch({
-      type: "ADD_ITEM",
-      payload: {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        size: selectedSize,
-        image: product.images[0],
-      },
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images[0],
     })
   }
 
   const handleWhatsAppOrder = () => {
     const message = encodeURIComponent(
-      `Hello! I'm interested in ordering the ${product.name} in size ${selectedSize}. Could you please provide more information?`,
+      `Hello! I'm interested in ordering the ${product.name}. Could you please provide more information?`,
     )
     const phoneNumber = "1234567890" // Replace with actual WhatsApp number
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank")
@@ -151,7 +147,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
             <Button
               onClick={handleAddToCart}
               disabled={!selectedSize}
-              className="w-full bg-accent text-accent-foreground hover:bg-accent/90 gold-shimmer py-3 text-lg"
+              className="w-full bg-accent text-accent-foreground hover:bg-accent/90 py-3 text-lg"
             >
               Add to Cart
             </Button>

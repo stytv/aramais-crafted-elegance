@@ -1,97 +1,199 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { useState } from "react"
-import { ShoppingBag, User, Menu, X, Search } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { useCart } from "@/lib/cart-context"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { Badge } from "@/components/ui/badge"
+import { Menu, X, ShoppingCart, User, LogOut } from "lucide-react"
+import { supabase } from "@/src/integrations/supabase/client"
 
 export function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { state } = useCart()
+  const [isOpen, setIsOpen] = useState(false)
+  const [user, setUser] = useState<any>(null)
+  const [cartCount, setCartCount] = useState(0)
+  const router = useRouter()
 
-  const navigation = [
-    { name: "Collections", href: "/collections" },
-    { name: "Oxfords", href: "/category/oxfords" },
-    { name: "Brogues", href: "/category/brogues" },
-    { name: "Loafers", href: "/category/loafers" },
-    { name: "Boots", href: "/category/boots" },
-    { name: "Custom Orders", href: "/custom" },
-    { name: "About", href: "/about" },
-  ]
+  useEffect(() => {
+    // Check if user is logged in
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    }
+    checkUser()
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+    localStorage.removeItem("supabase_session")
+    localStorage.removeItem("supabase_user_id")
+    localStorage.removeItem("supabase_role")
+    router.push("/")
+  }
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+    <nav className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-accent/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="text-2xl heading-serif text-accent">Aramis</div>
-            <div className="text-sm text-muted-foreground">LEATHER</div>
+            <span className="heading-serif text-2xl font-bold text-foreground">
+              Aramis Leather
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium text-foreground hover:text-accent transition-colors duration-200"
-              >
-                {item.name}
-              </Link>
-            ))}
+            <Link 
+              href="/" 
+              className="text-muted-foreground hover:text-accent transition-colors"
+            >
+              Home
+            </Link>
+            <Link 
+              href="/shop" 
+              className="text-muted-foreground hover:text-accent transition-colors"
+            >
+              Shop
+            </Link>
+            <Link 
+              href="/about" 
+              className="text-muted-foreground hover:text-accent transition-colors"
+            >
+              About
+            </Link>
+            <Link 
+              href="/contact" 
+              className="text-muted-foreground hover:text-accent transition-colors"
+            >
+              Contact
+            </Link>
           </div>
 
-          {/* Right side icons */}
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="text-foreground hover:text-accent">
-              <Search className="h-5 w-5" />
-            </Button>
-            <ThemeToggle />
-            <Link href="/account">
-              <Button variant="ghost" size="icon" className="text-foreground hover:text-accent">
-                <User className="h-5 w-5" />
-              </Button>
-            </Link>
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center space-x-4">
             <Link href="/cart" className="relative">
-              <Button variant="ghost" size="icon" className="text-foreground hover:text-accent">
-                <ShoppingBag className="h-5 w-5" />
-                {state.items.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {state.items.reduce((sum, item) => sum + item.quantity, 0)}
-                  </span>
+              <Button variant="ghost" size="sm">
+                <ShoppingCart className="h-4 w-4" />
+                {cartCount > 0 && (
+                  <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-accent text-accent-foreground">
+                    {cartCount}
+                  </Badge>
                 )}
               </Button>
             </Link>
+            
+            {user ? (
+              <div className="flex items-center space-x-2">
+                <Link href="/account">
+                  <Button variant="ghost" size="sm">
+                    <User className="h-4 w-4 mr-2" />
+                    Account
+                  </Button>
+                </Link>
+                <Button variant="ghost" size="sm" onClick={handleSignOut}>
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              </div>
+            ) : (
+              <Link href="/auth">
+                <Button variant="outline" className="border-accent/20 text-foreground bg-transparent hover:bg-accent/10">
+                  Sign In
+                </Button>
+              </Link>
+            )}
+          </div>
 
-            {/* Mobile menu button */}
+          {/* Mobile menu button */}
+          <div className="md:hidden">
             <Button
               variant="ghost"
-              size="icon"
-              className="md:hidden text-foreground"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              size="sm"
+              onClick={() => setIsOpen(!isOpen)}
             >
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden border-t border-border">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-card">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block px-3 py-2 text-base font-medium text-card-foreground hover:text-accent transition-colors duration-200"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
+        {isOpen && (
+          <div className="md:hidden py-4 border-t border-accent/20">
+            <div className="flex flex-col space-y-4">
+              <Link 
+                href="/" 
+                className="text-muted-foreground hover:text-accent transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Home
+              </Link>
+              <Link 
+                href="/shop" 
+                className="text-muted-foreground hover:text-accent transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Shop
+              </Link>
+              <Link 
+                href="/about" 
+                className="text-muted-foreground hover:text-accent transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                About
+              </Link>
+              <Link 
+                href="/contact" 
+                className="text-muted-foreground hover:text-accent transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Contact
+              </Link>
+              
+              <div className="pt-4 border-t border-accent/20">
+                <Link href="/cart" className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Cart</span>
+                  {cartCount > 0 && (
+                    <Badge className="bg-accent text-accent-foreground">
+                      {cartCount}
+                    </Badge>
+                  )}
                 </Link>
-              ))}
+                
+                {user ? (
+                  <div className="flex flex-col space-y-2 mt-4">
+                    <Link href="/account" onClick={() => setIsOpen(false)}>
+                      <Button variant="ghost" className="w-full justify-start">
+                        <User className="h-4 w-4 mr-2" />
+                        Account
+                      </Button>
+                    </Link>
+                    <Button 
+                      variant="ghost" 
+                      className="w-full justify-start" 
+                      onClick={() => {
+                        handleSignOut()
+                        setIsOpen(false)
+                      }}
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Sign Out
+                    </Button>
+                  </div>
+                ) : (
+                  <Link href="/auth" className="mt-4 block" onClick={() => setIsOpen(false)}>
+                    <Button variant="outline" className="w-full border-accent/20 text-foreground bg-transparent hover:bg-accent/10">
+                      Sign In
+                    </Button>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         )}

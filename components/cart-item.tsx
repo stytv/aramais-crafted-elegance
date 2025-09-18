@@ -10,35 +10,13 @@ interface CartItemProps {
     id: string
     name: string
     price: number
-    size: number
     quantity: number
-    image: string
+    image?: string
   }
 }
 
 export function CartItem({ item }: CartItemProps) {
-  const { dispatch } = useCart()
-
-  const updateQuantity = (newQuantity: number) => {
-    dispatch({
-      type: "UPDATE_QUANTITY",
-      payload: {
-        id: item.id,
-        size: item.size,
-        quantity: newQuantity,
-      },
-    })
-  }
-
-  const removeItem = () => {
-    dispatch({
-      type: "REMOVE_ITEM",
-      payload: {
-        id: item.id,
-        size: item.size,
-      },
-    })
-  }
+  const { updateQuantity, removeItem } = useCart()
 
   return (
     <div className="bg-card rounded-lg p-6 velvet-texture theme-transition">
@@ -47,7 +25,7 @@ export function CartItem({ item }: CartItemProps) {
         <div className="relative w-24 h-24 bg-muted rounded-lg overflow-hidden flex-shrink-0">
           <Image
             src={
-              item.image || "/placeholder.svg?height=96&width=96&query=luxury leather dress shoe product cart thumbnail"
+              item.image || "/placeholder.svg?height=96&width=96"
             }
             alt={item.name}
             fill
@@ -58,7 +36,6 @@ export function CartItem({ item }: CartItemProps) {
         {/* Product Details */}
         <div className="flex-1 min-w-0">
           <h3 className="heading-serif text-lg font-semibold text-card-foreground mb-1">{item.name}</h3>
-          <p className="text-muted-foreground mb-2">Size: {item.size}</p>
           <p className="text-accent font-semibold text-lg">${item.price}</p>
         </div>
 
@@ -67,7 +44,7 @@ export function CartItem({ item }: CartItemProps) {
           <Button
             variant="outline"
             size="icon"
-            onClick={() => updateQuantity(Math.max(1, item.quantity - 1))}
+            onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
             className="h-8 w-8 border-accent/20 text-card-foreground hover:border-accent theme-transition"
           >
             <Minus className="h-4 w-4" />
@@ -76,7 +53,7 @@ export function CartItem({ item }: CartItemProps) {
           <Button
             variant="outline"
             size="icon"
-            onClick={() => updateQuantity(item.quantity + 1)}
+            onClick={() => updateQuantity(item.id, item.quantity + 1)}
             className="h-8 w-8 border-accent/20 text-card-foreground hover:border-accent theme-transition"
           >
             <Plus className="h-4 w-4" />
@@ -92,7 +69,7 @@ export function CartItem({ item }: CartItemProps) {
         <Button
           variant="ghost"
           size="icon"
-          onClick={removeItem}
+          onClick={() => removeItem(item.id)}
           className="text-muted-foreground hover:text-destructive theme-transition"
         >
           <X className="h-5 w-5" />

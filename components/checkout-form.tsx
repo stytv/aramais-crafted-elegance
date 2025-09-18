@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useCart } from "@/lib/cart-context"
@@ -14,7 +13,104 @@ import { CreditCard, Lock, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 
 export function CheckoutForm() {
-  const { state, dispatch } = useCart()
+  const { items, clearCart, totalPrice } = useCart()
+  const router = useRouter()
+  const [isProcessing, setIsProcessing] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsProcessing(true)
+    
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    
+    const orderId = Math.random().toString(36).substr(2, 9).toUpperCase()
+    clearCart()
+    router.push(`/order/${orderId}`)
+  }
+
+  if (items.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center bg-card rounded-2xl p-16">
+          <h2 className="heading-serif text-2xl font-semibold text-card-foreground mb-4">Your cart is empty</h2>
+          <p className="text-muted-foreground mb-8">Add some items to your cart before proceeding to checkout.</p>
+          <Link href="/shop">
+            <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
+              Browse Collections
+            </Button>
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="space-y-8">
+          <Link href="/cart" className="inline-flex items-center text-accent hover:text-accent/80 transition-colors">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Cart
+          </Link>
+
+          <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Contact Information */}
+            <div className="bg-card rounded-lg p-6">
+              <h3 className="heading-serif text-xl font-semibold text-card-foreground mb-4">
+                Contact Information
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="email" className="text-card-foreground">Email Address</Label>
+                  <Input id="email" type="email" required className="bg-background border-accent/20" />
+                </div>
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={isProcessing}
+              className="w-full bg-accent text-accent-foreground hover:bg-accent/90 py-3 text-lg"
+            >
+              {isProcessing ? "Processing..." : `Complete Order - $${(totalPrice * 1.08).toFixed(2)}`}
+            </Button>
+          </form>
+        </div>
+
+        {/* Order Summary */}
+        <div className="space-y-6">
+          <div className="bg-card rounded-lg p-6">
+            <h3 className="heading-serif text-xl font-semibold text-card-foreground mb-4">Order Summary</h3>
+            <div className="space-y-4 mb-6">
+              {items.map((item: any) => (
+                <div key={item.id} className="flex items-center space-x-4">
+                  <div className="relative w-16 h-16 bg-muted rounded overflow-hidden">
+                    <img src={item.image || "/placeholder.svg"} alt={item.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-medium text-card-foreground">{item.name}</h4>
+                    <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                  </div>
+                  <div className="text-accent font-semibold">${(item.price * item.quantity).toFixed(2)}</div>
+                </div>
+              ))}
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between text-muted-foreground">
+                <span>Subtotal</span>
+                <span>${totalPrice.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-card-foreground font-semibold text-lg">
+                <span>Total</span>
+                <span className="text-accent">${(totalPrice * 1.08).toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
   const router = useRouter()
   const [isProcessing, setIsProcessing] = useState(false)
   const [formData, setFormData] = useState({

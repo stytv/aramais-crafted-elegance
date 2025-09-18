@@ -78,7 +78,7 @@ export default function AccountPage() {
 
       // Fetch profile
       const { data: profileData, error: profileError } = await supabase
-        .from<Profile>("profiles")
+        .from("profiles")
         .select("*")
         .eq("id", userId)
         .single()
@@ -87,7 +87,7 @@ export default function AccountPage() {
 
       // Fetch default address
       const { data: addressData } = await supabase
-        .from<Address>("addresses")
+        .from("addresses")
         .select("*")
         .eq("user_id", userId)
         .eq("is_default", true)
@@ -96,7 +96,7 @@ export default function AccountPage() {
 
       // Fetch orders with items and product images
       const { data: ordersData, error: ordersError } = await supabase
-        .from<Order>("orders")
+        .from("orders")
         .select(`
           *,
           order_items (
