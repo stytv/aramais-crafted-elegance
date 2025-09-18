@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import { supabase } from '../../lib/supabase'  // ✅ Import supabase
-import './AuthPage.css'
+import './authPage.css'
 import { useRouter } from 'next/navigation'
 
 
