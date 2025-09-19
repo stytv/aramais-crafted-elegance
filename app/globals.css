@@ -1,0 +1,177 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Updated color tokens for Old Money Gentlemen's Club aesthetic */
+:root {
+  /* Aramis Leather Brand Colors */
+  --mahogany: #2c1a17;
+  --espresso: #1a1a1a;
+  --gold: #c8a25f;
+  --hunter-green: #2e3d2f;
+  --cream: #f6f2ea;
+
+  /* Light mode semantic tokens */
+  --background: var(--cream);
+  --foreground: var(--espresso);
+  --card: #ffffff;
+  --card-foreground: var(--espresso);
+  --popover: #ffffff;
+  --popover-foreground: var(--espresso);
+  --primary: var(--gold);
+  --primary-foreground: var(--espresso);
+  --secondary: #f8f9fa;
+  --secondary-foreground: var(--espresso);
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: var(--gold);
+  --accent-foreground: var(--espresso);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: #e2e8f0;
+  --input: #ffffff;
+  --ring: var(--gold);
+  --radius: 0.5rem;
+
+  /* Chart colors (keeping original) */
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+
+  /* Sidebar tokens */
+  --sidebar: #ffffff;
+  --sidebar-foreground: var(--espresso);
+  --sidebar-primary: var(--gold);
+  --sidebar-primary-foreground: var(--espresso);
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: var(--espresso);
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: var(--gold);
+}
+
+/* Dark mode color overrides */
+.dark {
+  --background: var(--mahogany);
+  --foreground: var(--cream);
+  --card: var(--espresso);
+  --card-foreground: var(--cream);
+  --popover: var(--hunter-green);
+  --popover-foreground: var(--cream);
+  --primary: var(--gold);
+  --primary-foreground: var(--espresso);
+  --secondary: var(--espresso);
+  --secondary-foreground: var(--cream);
+  --muted: var(--hunter-green);
+  --muted-foreground: var(--cream);
+  --accent: var(--gold);
+  --accent-foreground: var(--espresso);
+  --border: #475569;
+  --input: var(--cream);
+  --sidebar: var(--mahogany);
+  --sidebar-foreground: var(--cream);
+  --sidebar-accent: var(--hunter-green);
+  --sidebar-accent-foreground: var(--cream);
+  --sidebar-border: #475569;
+}
+
+/* Added serif font for headings */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap");
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: "Playfair Display", serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Added custom typography classes for Old Money aesthetic */
+  .heading-serif {
+    @apply font-serif font-semibold;
+  }
+
+  .gold-shimmer {
+    @apply transition-all duration-300 hover:shadow-lg hover:shadow-accent/20;
+  }
+
+  .velvet-texture {
+    background-image: radial-gradient(circle at 1px 1px, rgba(200, 162, 95, 0.1) 1px, transparent 0);
+    background-size: 20px 20px;
+  }
+
+  /* Added theme transition animations */
+  .theme-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .theme-toggle-icon {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  }
+
+  /* Enhanced card and component transitions */
+  .card,
+  .bg-card,
+  [class*="bg-"] {
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Fixed screen reader text contrast for accessibility */
+  .sr-only {
+    @apply text-foreground;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+}
