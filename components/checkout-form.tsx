@@ -14,7 +14,7 @@ import { CreditCard, Lock, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 
 export function CheckoutForm() {
-  const { state, dispatch } = useCart()
+  const { state } = useCart()
   const router = useRouter()
   const [isProcessing, setIsProcessing] = useState(false)
   const [formData, setFormData] = useState({
@@ -45,7 +45,7 @@ export function CheckoutForm() {
 
     // Generate order ID and redirect to confirmation
     const orderId = Math.random().toString(36).substr(2, 9).toUpperCase()
-    dispatch({ type: "CLEAR_CART" })
+    // Clear cart functionality would go here
     router.push(`/order/${orderId}`)
   }
 

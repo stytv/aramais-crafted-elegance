@@ -66,7 +66,7 @@ export default function HomePage() {
   return (
     <CartProvider>
       <div className="min-h-screen bg-background">
-        <Navbar userId={userId} />
+        <Navbar />
         <main>
           <HeroSection />
           <FeaturedProducts />

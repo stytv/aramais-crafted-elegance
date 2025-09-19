@@ -78,25 +78,25 @@ export default function AccountPage() {
 
       // Fetch profile
       const { data: profileData, error: profileError } = await supabase
-        .from<Profile>("profiles")
+        .from("profiles")
         .select("*")
         .eq("id", userId)
-        .single()
+        .maybeSingle()
       if (profileError) console.error("Failed to fetch profile:", profileError)
       else setProfile(profileData)
 
       // Fetch default address
       const { data: addressData } = await supabase
-        .from<Address>("addresses")
+        .from("addresses")
         .select("*")
         .eq("user_id", userId)
         .eq("is_default", true)
-        .single()
+        .maybeSingle()
       setDefaultAddress(addressData || null)
 
       // Fetch orders with items and product images
       const { data: ordersData, error: ordersError } = await supabase
-        .from<Order>("orders")
+        .from("orders")
         .select(`
           *,
           order_items (

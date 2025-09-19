@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 213 27% 84%;
+    --foreground: 215 25% 27%;
+    --card: 220 23% 95%;
+    --card-foreground: 215 25% 27%;
+    --popover: 220 23% 95%;
+    --popover-foreground: 215 25% 27%;
+    --primary: 17 88% 20%;
+    --primary-foreground: 43 70% 90%;
+    --secondary: 43 23% 70%;
+    --secondary-foreground: 17 88% 20%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 43 70% 50%;
+    --accent-foreground: 17 88% 20%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 43 70% 50%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 17 63% 6%;
+    --foreground: 43 70% 90%;
+    --card: 17 50% 10%;
+    --card-foreground: 43 70% 90%;
+    --popover: 17 50% 10%;
+    --popover-foreground: 43 70% 90%;
+    --primary: 43 70% 50%;
+    --primary-foreground: 17 88% 20%;
+    --secondary: 17 30% 15%;
+    --secondary-foreground: 43 70% 90%;
+    --muted: 17 30% 15%;
+    --muted-foreground: 43 23% 70%;
+    --accent: 43 70% 50%;
+    --accent-foreground: 17 88% 20%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 17 30% 18%;
+    --input: 17 30% 18%;
+    --ring: 43 70% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.heading-serif {
+  font-family: "Playfair Display", serif;
+}
+
+.gold-shimmer {
+  @apply hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] transition-all duration-300;
+}
+
+.velvet-texture {
+  background: radial-gradient(ellipse at center, hsla(var(--accent), 0.1) 0%, transparent 70%);
+}
+
+.theme-transition {
+  @apply transition-colors duration-300;
+}
+
+.component-update {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

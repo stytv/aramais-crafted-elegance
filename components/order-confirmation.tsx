@@ -63,7 +63,24 @@ export function OrderConfirmation() {
       if (error) {
         console.error("Failed to fetch order:", error)
       } else {
-        setOrder(data)
+        setOrder({
+          id: data.id,
+          total: data.total,
+          status: data.status,
+          created_at: data.created_at,
+          order_items: data.order_items.map((item: any) => ({
+            id: item.id,
+            product_id: item.product_id || item.product?.id,
+            quantity: item.quantity,
+            price: item.price,
+            size: item.size,
+            product: {
+              id: item.product?.id || item.product_id,
+              name: item.product?.name || "Unknown Product", 
+              product_images: item.product?.product_images || []
+            }
+          }))
+        })
       }
       setLoading(false)
     }

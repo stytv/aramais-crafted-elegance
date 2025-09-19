@@ -37,9 +37,6 @@ interface ProductDetailProps {
   userId?: string
   userName?: string
 }
-const Alert = (props: AlertProps) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />
-}
 
 export function ProductDetail({ product, userName }: ProductDetailProps) {
   const [selectedImage, setSelectedImage] = useState(0)

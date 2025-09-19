@@ -70,7 +70,16 @@ export default function ProductPage({ params }: ProductPageProps) {
         .neq("id", data.id)
         .limit(3)
 
-      if (!relatedError) setRelatedProducts(related || [])
+      if (!relatedError) {
+        setRelatedProducts((related || []).map((product: any) => ({
+          id: product.id,
+          name: product.name,
+          description: product.description || "",
+          price: product.price,
+          category_id: product.category_id || 1,
+          product_images: product.product_images || []
+        })))
+      }
     }
 
     fetchProduct()
@@ -83,7 +92,14 @@ export default function ProductPage({ params }: ProductPageProps) {
       <div className="min-h-screen bg-background">
         <Navbar />
         <main className="pt-16">
-          <ProductDetail product={product} />
+          <ProductDetail product={{
+            ...product,
+            category: product.category?.name || '',
+            craftsmanship: product.craftsmanship || '',
+            care: product.care || '',
+            sizes: product.sizes || [],
+            product_images: product.images || []
+          }} />
           <RelatedProducts products={relatedProducts} />
         </main>
         <Footer />

@@ -144,7 +144,7 @@ export function Navbar() {
                   <Search className="h-5 w-5" />
                 </Button>
 
-                <ThemeToggle className="hidden md:inline-flex" />
+                <ThemeToggle />
 
                 <Button
                   variant="ghost"

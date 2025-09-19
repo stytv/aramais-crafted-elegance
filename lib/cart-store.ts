@@ -57,7 +57,7 @@ export const useCartStore = create<CartState>()(
           .from("cart_items")
           .upsert(
             { user_id: userId, product_id: item.product_id, size: item.size, quantity: 1 },
-            { onConflict: ["user_id", "product_id", "size"] }
+            { onConflict: "user_id,product_id,size" }
           )
         if (error) return console.error(error)
         await get().fetchCart(userId)
