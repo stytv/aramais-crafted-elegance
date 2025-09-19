@@ -23,7 +23,7 @@ interface Product {
   description: string
   category_id: number
   category?: { id: number; name: string }
-  images?: { image_url: string }[]
+  product_images?: { image_url: string }[]
   craftsmanship?: string
   care?: string
   sizes?: number[]
@@ -98,9 +98,20 @@ export default function ProductPage({ params }: ProductPageProps) {
             craftsmanship: product.craftsmanship || '',
             care: product.care || '',
             sizes: product.sizes || [],
-            product_images: product.images || []
+            product_images: product.product_images || []
           }} />
-          <RelatedProducts products={relatedProducts} />
+          <RelatedProducts products={relatedProducts.map(p => ({
+            id: p.id,
+            name: p.name,
+            category: '',
+            price: p.price,
+            images: p.product_images?.map(img => img.image_url) || [],
+            description: p.description || '',
+            craftsmanship: '',
+            care: '',
+            sizes: [],
+            featured: false
+          }))} />
         </main>
         <Footer />
         {/* <FloatingWhatsApp /> */}

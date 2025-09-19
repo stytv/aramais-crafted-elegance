@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase"
 
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { HeroSection } from "@/components/hero-section"
+import { HeroSectionOptimized } from "@/components/optimized/hero-section-optimized"
 import { FeaturedProducts } from "@/components/featured-products"
 import { WhyAramis } from "@/components/why-aramis"
 import { Testimonials } from "@/components/testimonials"
@@ -68,7 +68,7 @@ export default function HomePage() {
       <div className="min-h-screen bg-background">
         <Navbar />
         <main>
-          <HeroSection />
+          <HeroSectionOptimized />
           <FeaturedProducts />
           <WhyAramis />
           <Testimonials />
